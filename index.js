@@ -27,6 +27,9 @@ try {
       pidToPort[worker.process.pid] = port;
     }
     console.log(pidToPort);
+    cluster.on("exit", function (worker, code, signal) {
+      console.log("worker " + worker.process.pid + " died");
+    });
   } else {
     connectDb();
     app.listen(process.env.port, () => {
